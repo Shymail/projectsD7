@@ -204,14 +204,6 @@ class NewUpdate(LoginRequiredMixin, UpdateView):
     # и новый шаблон, в котором используется форма.
     template_name = 'flatpages/new_edit.html'
 
-    def form_valid(self, form):
-        new = form.save(commit=False)
-        if self.request.path == '/post/new/create/':
-            new.news_category_id = 1
-        elif self.request.path == '/post/article/create/':
-            new.news_category_id = 2
-        new.save()
-        return super().form_valid(form)
 
 # Представление удаляющее товар.
 class NewDelete(DeleteView):
