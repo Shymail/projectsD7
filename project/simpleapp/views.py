@@ -7,7 +7,7 @@ from datetime import datetime
 from .filters import ProductFilter, NewsFilter
 from .forms import ProductForm, NewForm  # для создания продуктов через функцию forms.py
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from .models import NewsCategory
 
 
 class ProductsList(ListView):
@@ -185,9 +185,9 @@ class NewCreate(CreateView):
     def form_valid(self, form):
         new = form.save(commit=False)
         if self.request.path == '/post/new/create/':
-            new.news_category_id = 1
+            new.news_category = NewsCategory.objects.get(pk=1)
         elif self.request.path == '/post/article/create/':
-            new.news_category_id = 2
+            new.news_category = NewsCategory.objects.get(pk=2)
         new.save()
         return super().form_valid(form)
 
